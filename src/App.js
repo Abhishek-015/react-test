@@ -28,7 +28,7 @@ function App() {
   const getData = (value) => {
     fetch(
       `http://localhost:3001/games?_sort=${value}&_order=${
-        value == "gameprice" || value == "gamerating" ? "desc" : "asc"
+      value == "gamerating" ? "desc" : "asc"
       }`
     )
       .then((res) => res.json())
@@ -38,6 +38,14 @@ function App() {
   const handleClick = (sortBy) => {
     getData(sortBy);
   };
+
+  const handlePriceSort = () => {
+    setData((datas) => {
+      return [...datas.sort((a,b)=>{
+        return +b.gameprice -  +a.gameprice
+      })]
+    })
+  }
 
   //post data
   const postData = (d) => {
@@ -107,7 +115,7 @@ function App() {
               <th scope="col">Author</th>
               <span>
                 <th scope="col">Price</th>
-                <SortBtn handleClick={handleClick} sortByValue="gameprice" />
+                <SortBtn handleClick={handlePriceSort}  />
               </span>
               <th scope="col">Description</th>
               <th scope="col">For Kids</th>
